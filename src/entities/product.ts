@@ -1,4 +1,6 @@
-import { ObjectType, Field, Int, Float, ID } from 'type-graphql';
+import {
+  ObjectType, Field, Int, Float, ID,
+} from 'type-graphql';
 import { Prop, getModelForClass, Index } from '@typegoose/typegoose';
 
 @ObjectType()
@@ -27,5 +29,5 @@ export class Product {
 }
 
 export const ProductModel = getModelForClass(Product, {
-  schemaOptions: { timestamps: true }
+  schemaOptions: { timestamps: true },
 });

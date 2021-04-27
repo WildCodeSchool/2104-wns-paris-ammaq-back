@@ -1,10 +1,11 @@
-import { Resolver, Query, Mutation, Arg, ID } from 'type-graphql';
+import {
+  Resolver, Query, Mutation, Arg, ID,
+} from 'type-graphql';
 import { Product, ProductModel } from '../../entities/product';
-import { ProductInput } from '../inputs/product';
+import ProductInput from '../inputs/product';
 
 @Resolver(Product)
-export class ProductResolver {
-  
+export default class ProductResolver {
   @Query(() => [Product])
   async products(): Promise<Product[]> {
     const products = await ProductModel.find().exec();
@@ -24,7 +25,7 @@ export class ProductResolver {
   @Query(() => [Product])
   async searchProduct(@Arg('text') text: string): Promise<Product[]> {
     const products = await ProductModel.find({
-      $text: { $search: text }
+      $text: { $search: text },
     })
       .limit(10)
       .exec();
@@ -44,10 +45,10 @@ export class ProductResolver {
   @Mutation(() => Product)
   async updateProduct(
     @Arg('id', () => ID) id: string,
-    @Arg('input') input: ProductInput
+      @Arg('input') input: ProductInput,
   ): Promise<Product> {
     const product = await ProductModel.findByIdAndUpdate(id, input, {
-      new: true
+      new: true,
     });
     if (!product) throw new Error('product not found');
 

@@ -1,9 +1,11 @@
-import { InputType, Field, Int, Float } from 'type-graphql';
+import {
+  InputType, Field, Int, Float,
+} from 'type-graphql';
 
 import { Product } from '../../entities/product';
 
 @InputType()
-export class ProductInput implements Partial<Product> {
+export default class ProductInput implements Partial<Product> {
   @Field()
   name!: string;
 
