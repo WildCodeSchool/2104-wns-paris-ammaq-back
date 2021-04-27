@@ -2,7 +2,7 @@ import {
   InputType, Field, Int, Float,
 } from 'type-graphql';
 
-import { Product } from '../../entities/product';
+import { Product } from '../../entities/product.entity';
 
 @InputType()
 export default class ProductInput implements Partial<Product> {
