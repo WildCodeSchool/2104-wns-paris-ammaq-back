@@ -11,8 +11,8 @@ export class Channel {
   name!: string;
 
   @Field()
-  @Prop({ trim: true, required: true })
-  vocal!: boolean;
+  @Prop({ required: true })
+  isVocal!: boolean;
 
   @Field({ nullable: true })
   @Prop({ trim: true })

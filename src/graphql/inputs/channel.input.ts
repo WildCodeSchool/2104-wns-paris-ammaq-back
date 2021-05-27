@@ -3,11 +3,11 @@ import { Channel } from '../../entities/channel.entity';
 
 @InputType()
 export default class ChannelInput implements Partial<Channel> {
-  @Field(() => String)
+  @Field()
   name!: string;
 
   @Field()
-  vocal!: boolean;
+  isVocal!: boolean;
 
   @Field({ nullable: true })
   password?: string;
