@@ -14,6 +14,10 @@ export class Channel {
   @Prop({ required: true })
   isVocal!: boolean;
 
+  @Field({ nullable: true })
+  @Prop({ trim: true })
+  password?: string;
+
   @Field()
   createdAt!: Date;
 
