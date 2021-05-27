@@ -8,4 +8,7 @@ export default class ChannelInput implements Partial<Channel> {
 
   @Field()
   isVocal!: boolean;
+
+  @Field({ nullable: true })
+  password?: string;
 }

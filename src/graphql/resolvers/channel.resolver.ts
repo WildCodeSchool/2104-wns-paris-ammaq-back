@@ -17,7 +17,7 @@ export default class ChannelResolver {
   async channel(@Arg('id', () => ID) id: string): Promise<Channel> {
     const channel = await ChannelModel.findById(id).exec();
 
-    if (!channel) throw new Error('user not found');
+    if (!channel) throw new Error('channel not found');
 
     return channel;
   }
@@ -39,7 +39,7 @@ export default class ChannelResolver {
     const channel = await ChannelModel.findByIdAndUpdate(id, input, {
       new: true,
     });
-    if (!channel) throw new Error('user not found');
+    if (!channel) throw new Error('channel not found');
 
     return channel;
   }
@@ -47,7 +47,7 @@ export default class ChannelResolver {
   @Mutation(() => Channel)
   async deleteChannel(@Arg('id', () => ID) id: string): Promise<Channel> {
     const channel = await ChannelModel.findByIdAndDelete(id);
-    if (!channel) throw new Error('user not found');
+    if (!channel) throw new Error('channel not found');
 
     return channel;
   }
