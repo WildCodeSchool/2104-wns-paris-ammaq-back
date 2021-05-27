@@ -1,6 +1,7 @@
 import { connect } from 'mongoose';
 
-const dbUrl = 'mongodb://127.0.0.1:27017/workit';
+const dbUrl = 'mongodb+srv://userprout:prout@pipou.8qfj5.mongodb.net/workit?retryWrites=true&w=majority';
+
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
