@@ -9,7 +9,7 @@ export default class ChannelResolver {
   @Query(() => [Channel])
   async channels(): Promise<Channel[]> {
     const channels = await ChannelModel.find().exec();
-
+    channels.sort((a, b) => Number(a.isVocal) - Number(b.isVocal));
     return channels;
   }
 
