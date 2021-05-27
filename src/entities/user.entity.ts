@@ -21,10 +21,6 @@ export class User {
   @Prop({ trim: true, required: true })
   password!: string;
 
-  @Field({ nullable: true })
-  @Prop({ trim: true })
-  avatarPath?: string;
-
   @Field()
   createdAt!: Date;
 
