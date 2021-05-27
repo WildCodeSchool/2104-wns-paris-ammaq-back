@@ -3,7 +3,7 @@ import { User } from '../../entities/user.entity';
 
 @InputType()
 export default class UserInput implements Partial<User> {
-  @Field(() => String)
+  @Field()
   firstname!: string;
 
   @Field()
@@ -14,4 +14,7 @@ export default class UserInput implements Partial<User> {
 
   @Field()
   password!: string;
+
+  @Field({ nullable: true })
+  avatarPath?: string;
 }

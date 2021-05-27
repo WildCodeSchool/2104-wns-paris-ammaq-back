@@ -39,7 +39,7 @@ export default class ChannelResolver {
     const channel = await ChannelModel.findByIdAndUpdate(id, input, {
       new: true,
     });
-    if (!channel) throw new Error('Channel not found');
+    if (!channel) throw new Error('channel not found');
 
     return channel;
   }
