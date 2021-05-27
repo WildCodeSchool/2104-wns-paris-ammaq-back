@@ -16,11 +16,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@typegoose/typegoose": "^7.3.5",
+    "@typegoose/typegoose": "^7.6.0",
     "apollo-server": "^2.23.0",
     "class-validator": "^0.13.1",
     "graphql": "^15.5.0",
-    "mongoose": "^5.12.5",
+    "mongoose": "^5.10.18",
     "reflect-metadata": "^0.1.13",
     "type-graphql": "^1.1.1"
   },
