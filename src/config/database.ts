@@ -1,6 +1,10 @@
 import { connect } from 'mongoose';
+import * as dotenv from 'dotenv';
 
-const dbUrl = 'mongodb://127.0.0.1:27017/workit';
+dotenv.config();
+
+const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/workit';
+
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,

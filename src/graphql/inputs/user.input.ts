@@ -3,6 +3,10 @@ import { User } from '../../entities/user.entity';
 
 @InputType()
 export default class UserInput implements Partial<User> {
+
+  @Field(() => String)
+  avatar?: string;
+
   @Field(() => String)
   firstname!: string;
 

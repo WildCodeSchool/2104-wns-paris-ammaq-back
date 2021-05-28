@@ -19,6 +19,7 @@
     "@typegoose/typegoose": "^7.3.5",
     "apollo-server": "^2.23.0",
     "class-validator": "^0.13.1",
+    "dotenv": "^10.0.0",
     "graphql": "^15.5.0",
     "mongoose": "^5.12.5",
     "reflect-metadata": "^0.1.13",

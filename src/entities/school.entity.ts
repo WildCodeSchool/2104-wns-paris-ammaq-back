@@ -2,28 +2,17 @@ import { ObjectType, Field, ID } from 'type-graphql';
 import { Prop, getModelForClass } from '@typegoose/typegoose';
 
 @ObjectType()
-export class User {
+export class School {
   @Field(() => ID)
   id!: string;
 
-  @Field({ nullable: true })
-  @Prop({ trim: true })
-  avatar?: string;
+  @Field()
+  @Prop({ trim: true, required: true })
+  name!: string;
 
   @Field()
   @Prop({ trim: true, required: true })
-  firstname!: string;
-
-  @Field()
-  @Prop({ trim: true, required: true })
-  lastname!: string;
-
-  @Field()
-  @Prop({ trim: true, unique: true, required: true })
-  email!: string;
-
-  @Prop({ trim: true, required: true })
-  password!: string;
+  logo!: string;
 
   @Field()
   createdAt!: Date;
@@ -32,6 +21,6 @@ export class User {
   updatedAt!: Date;
 }
 
-export const UserModel = getModelForClass(User, {
+export const SchoolModel = getModelForClass(School, {
   schemaOptions: { timestamps: true },
 });
