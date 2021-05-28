@@ -7,6 +7,10 @@ export class User {
   id!: string;
 
   @Field()
+  @Prop({ trim: true })
+  avatar!: string;
+
+  @Field()
   @Prop({ trim: true, required: true })
   firstname!: string;
 
