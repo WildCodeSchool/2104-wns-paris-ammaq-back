@@ -5,7 +5,7 @@ import { User } from '../../entities/user.entity';
 export default class UserInput implements Partial<User> {
 
   @Field(() => String)
-  avatar!: string;
+  avatar?: string;
 
   @Field(() => String)
   firstname!: string;
