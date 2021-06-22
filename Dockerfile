@@ -3,9 +3,9 @@ FROM node:alpine
 RUN mkdir /app
 WORKDIR /app
 
-COPY package.json yarn.lock .eslintrc.json tsconfig.json .env ./
+COPY package.json yarn.lock ./
 RUN yarn install
 
-COPY src src
+COPY . .
 
 CMD npm start
