@@ -1,6 +1,9 @@
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer, AuthenticationError } from 'apollo-server';
 import { buildSchema } from 'type-graphql';
-import handleContext from './config/auth';
+import jwt from 'jsonwebtoken';
+import Payload from './graphql/types/Payload';
+
+const jwtKey = process.env.JWT_KEY as string;
 
 export default async function initServer(): Promise<void> {
   try {
@@ -10,7 +13,19 @@ export default async function initServer(): Promise<void> {
         resolvers: [`${__dirname}/graphql/resolvers/**/*.{ts,js}`],
         validate: false,
       }),
-      context: handleContext,
+      context: ({ req }): Payload => {
+        const token = req.headers.authorization;
+        if (token) {
+          let payload;
+          try {
+            payload = jwt.verify(token, jwtKey) as Payload;
+            return payload;
+          } catch (err) {
+            throw new AuthenticationError(err);
+          }
+        }
+        return {};
+      },
     });
 
     const { url } = await server.listen();
