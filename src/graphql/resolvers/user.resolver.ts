@@ -3,6 +3,7 @@ import {
 } from 'type-graphql';
 import UserInput from '../inputs/user.input';
 import { User, UserModel } from '../../entities/user.entity';
+import { ApolloError } from 'apollo-server';
 
 @Resolver(User)
 export default class UserResolver {
@@ -24,11 +25,19 @@ export default class UserResolver {
 
   @Mutation(() => User)
   async createUser(@Arg('input') input: UserInput): Promise<User> {
-    const user = new UserModel(input);
+    try {
+      const user = new UserModel(input);
 
     await user.save();
 
     return user;
+    } catch (error) {
+      if (error.code === 11000 && error.name === "MongoError") {
+        throw new ApolloError("Duplicate Key")
+      }
+      throw new ApolloError(error);
+    }
+    
   }
 
   @Mutation(() => User)
