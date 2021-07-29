@@ -1,5 +1,6 @@
 import { ApolloServer } from 'apollo-server';
 import { buildSchema } from 'type-graphql';
+import handleContext from './config/auth';
 
 export default async function initServer(): Promise<void> {
   try {
@@ -9,6 +10,7 @@ export default async function initServer(): Promise<void> {
         resolvers: [`${__dirname}/graphql/resolvers/**/*.{ts,js}`],
         validate: false,
       }),
+      context: handleContext,
     });
 
     const { url } = await server.listen();

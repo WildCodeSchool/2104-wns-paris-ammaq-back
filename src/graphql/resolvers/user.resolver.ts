@@ -1,6 +1,7 @@
 import {
   Resolver, Query, Arg, ID, Mutation,
 } from 'type-graphql';
+import * as argon2 from 'argon2';
 import UserInput from '../inputs/user.input';
 import { User, UserModel } from '../../entities/user.entity';
 
@@ -24,7 +25,8 @@ export default class UserResolver {
 
   @Mutation(() => User)
   async createUser(@Arg('input') input: UserInput): Promise<User> {
-    const user = new UserModel(input);
+    const hash = await argon2.hash(input.password);
+    const user = new UserModel({ ...input, password: hash });
 
     await user.save();
 
