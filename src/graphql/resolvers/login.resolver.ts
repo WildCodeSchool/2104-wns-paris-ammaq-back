@@ -1,29 +1,41 @@
 import {
-  Resolver, Query, Arg,
+  Resolver, Query, Arg, Mutation, Authorized,
 } from 'type-graphql';
 import * as argon2 from 'argon2';
-import { ApolloError, AuthenticationError } from 'apollo-server';
-import jwt from 'jsonwebtoken';
-import LoginInput from '../inputs/login.input';
+import { AuthenticationError } from 'apollo-server';
+import { generateToken } from '../../utils/auth';
 import { UserModel } from '../../entities/user.entity';
-import Payload from '../types/Payload';
+import LoginInput from '../inputs/login.input';
+import UserInput from '../inputs/user.input';
+import Token from '../types/token.type';
 
-const jwtKey = process.env.JWT_KEY as string;
-
-@Resolver()
+@Resolver(Token)
 export default class LoginResolver {
-  @Query(() => String)
-  async login(@Arg('input') input: LoginInput): Promise<string> {
-    try {
-      const user = await UserModel.findOne({ email: input.email }).exec();
-      if (user && await argon2.verify(user.password, input.password)) {
-        const payload: Payload = { user: user.email };
-        const token = jwt.sign(payload, jwtKey);
-        return token;
-      }
-      throw new AuthenticationError('invalid credentials');
-    } catch (error) {
-      throw new ApolloError(error);
-    }
+  @Query(() => Token)
+  async login(@Arg('input') input: LoginInput): Promise<Token> {
+    const { email, password } = input;
+
+    const user = await UserModel.findOne({ email }).exec();
+    if (!user) throw new AuthenticationError('user not exist');
+
+    const correctPassword = await argon2.verify(user.password, password);
+    if (!correctPassword) throw new AuthenticationError('password is incorrect');
+
+    return { token: generateToken(user) };
+  }
+
+  @Mutation(() => Token)
+  async register(@Arg('input') input: UserInput): Promise<Token> {
+    const { email, password } = input;
+
+    const user = await UserModel.findOne({ email }).exec();
+    if (user) throw new Error('email is already in use');
+
+    const hashPassword = await argon2.hash(password);
+    const newUser = new UserModel({ ...input, password: hashPassword });
+
+    await newUser.save();
+
+    return { token: generateToken(newUser) };
   }
 }
