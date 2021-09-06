@@ -2,7 +2,7 @@ import { ObjectType, Field, ID } from 'type-graphql';
 import { Prop, getModelForClass } from '@typegoose/typegoose';
 
 @ObjectType()
-export default class Question {
+export class Question {
   @Field(() => ID)
   id!: string;
 
