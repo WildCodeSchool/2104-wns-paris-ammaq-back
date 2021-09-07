@@ -12,7 +12,7 @@ export class Quiz {
   name!: string;
 
   @Field(() => [Question])
-  @Prop({ required: true, ref: Question })
+  @Prop({ type: () => Question, default: []})
   questions!: Ref<Question>[];
 }
 
