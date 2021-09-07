@@ -1,6 +1,6 @@
 import { ObjectType, Field, ID } from 'type-graphql';
-import { Prop, getModelForClass } from '@typegoose/typegoose';
-import Question from './question.entity';
+import { Prop, getModelForClass, Ref } from '@typegoose/typegoose';
+import { Question } from './question.entity';
 
 @ObjectType()
 export class Quiz {
@@ -12,8 +12,8 @@ export class Quiz {
   name!: string;
 
   @Field(() => [Question])
-  @Prop({ required: true })
-  questions!: Question[];
+  @Prop({ required: true, ref: Question })
+  questions!: Ref<Question>[];
 }
 
 export const QuizModel = getModelForClass(Quiz, {
