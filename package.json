@@ -18,14 +18,17 @@
   "dependencies": {
     "@typegoose/typegoose": "^7.3.5",
     "apollo-server": "^2.23.0",
+    "argon2": "^0.28.2",
     "class-validator": "^0.13.1",
     "dotenv": "^10.0.0",
     "graphql": "^15.5.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.5",
     "reflect-metadata": "^0.1.13",
     "type-graphql": "^1.1.1"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^8.5.4",
     "@types/mongoose": "^5.10.5",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
