@@ -16,7 +16,7 @@ export default class LoginResolver {
     const { email, password } = input;
 
     const user = await UserModel.findOne({ email }).exec();
-    if (!user) throw new AuthenticationError('user not exist');
+    if (!user) throw new AuthenticationError('user does not exist');
 
     const correctPassword = await argon2.verify(user.password, password);
     if (!correctPassword) throw new AuthenticationError('password is incorrect');
