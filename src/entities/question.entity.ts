@@ -2,9 +2,9 @@ import { ObjectType, Field, ID } from 'type-graphql';
 import { Prop, getModelForClass } from '@typegoose/typegoose';
 
 @ObjectType()
-export default class Question {
+export class Question {
   @Field(() => ID)
-  id!: string;
+  id?: string;
 
   @Field()
   @Prop({ required: true, trim: true })
@@ -14,9 +14,9 @@ export default class Question {
   @Prop({ required: true, trim: true })
   answer!: string;
 
-  @Field()
+  @Field(() => [String])
   @Prop({ required: true })
-  allChoices!: [];
+  allChoices!: [string];
 }
 
 export const QuestionModel = getModelForClass(Question, {
