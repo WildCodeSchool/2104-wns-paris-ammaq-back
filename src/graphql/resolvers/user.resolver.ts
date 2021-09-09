@@ -22,6 +22,15 @@ export default class UserResolver {
     return user;
   }
 
+  @Query(() => User)
+  async userByMail(@Arg('email') email: string): Promise<User> {
+    const user = await UserModel.findOne({ email: email }).exec();
+    
+    if (!user) throw new Error('user not found');
+
+    return user;
+  }
+
   @Mutation(() => User)
   async updateUser(
     @Arg('id', () => ID) id: string,
