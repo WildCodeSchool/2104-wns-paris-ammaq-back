@@ -1,28 +1,17 @@
 import { ObjectType, Field, ID } from 'type-graphql';
-import { Prop, getModelForClass } from '@typegoose/typegoose';
+import { Prop, getModelForClass, Ref } from '@typegoose/typegoose';
+import { User } from './user.entity';
 
 @ObjectType()
 export class Score {
-  @Field(() => ID)
-  id!: string;
 
-  @Field()
-  @Prop({ trim: true, required: true })
-  userID!: string;
-
-  @Field()
-  @Prop({ trim: true, required: true })
-  quizID!: string;
+  @Field(() => User)
+  @Prop({ ref: User })
+  userId!: Ref<User>;
 
   @Field()
   @Prop({ required: true })
   score!: Number;
-
-  @Field()
-  createdAt!: Date;
-
-  @Field()
-  updatedAt!: Date;
 }
 
 export const ScoreModel = getModelForClass(Score, {

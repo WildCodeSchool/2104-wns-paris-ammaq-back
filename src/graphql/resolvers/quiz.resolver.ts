@@ -3,6 +3,8 @@ import {
 } from 'type-graphql';
 import QuizInput from '../inputs/quiz.input';
 import { Quiz, QuizModel } from '../../entities/quiz.entity';
+import ScoreInput from '../../graphql/inputs/score.input';
+import { Score } from '././../../entities/score.entity';
 
 @Resolver(Quiz)
 export default class QuizResolver {
@@ -27,6 +29,24 @@ export default class QuizResolver {
     const quiz = new QuizModel(input);
 
     await quiz.save();
+
+    return quiz;
+  }
+
+  // * Ajouter une muttation pour ajouter un score 
+  @Mutation(() => Quiz)
+  async addScore(
+    @Arg('id', () => ID) id: string,
+    @Arg('input') input: ScoreInput
+  ): Promise<Quiz> {
+    const quiz = await QuizModel.findById(id);
+    console.log(quiz);
+    if (!quiz) throw new Error('Quiz not found');
+
+    quiz?.scores?.push(input)
+
+    quiz?.save();
+
 
     return quiz;
   }

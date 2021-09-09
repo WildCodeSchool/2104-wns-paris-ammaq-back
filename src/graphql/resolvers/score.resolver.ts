@@ -22,6 +22,12 @@ export default class ScoreResolver {
     return score;
   }
 
+  @Query(() => Score)
+  async scoresByQuizId(@Arg('quizID', () => ID) quizID: string): Promise<Score[]>{
+    const scores = await ScoreModel.find({ quizID }).exec();
+    return scores;
+  }
+
   @Mutation(() => Score)
   async createScore(@Arg('input') input: ScoreInput): Promise<Score> {
     const score = new ScoreModel(input);
