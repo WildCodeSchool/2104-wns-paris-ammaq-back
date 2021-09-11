@@ -1,7 +1,7 @@
-import { ObjectType, Field, ID } from 'type-graphql';
-import { Prop, getModelForClass, Ref } from '@typegoose/typegoose';
-import { Question } from './question.entity';
-import { Score } from './score.entity';
+import { ObjectType, Field, ID } from "type-graphql";
+import { Prop, getModelForClass, Ref } from "@typegoose/typegoose";
+import { Question } from "./question.entity";
+import { Score } from "./score.entity";
 
 @ObjectType()
 export class Quiz {
@@ -13,14 +13,12 @@ export class Quiz {
   name!: string;
 
   @Field(() => [Question])
-  @Prop({ type: () => Question, default: []})
+  @Prop({ type: () => Question, default: [] })
   questions!: Ref<Question>[];
-
 
   @Field(() => [Score])
   @Prop({ type: () => Score, default: [] })
-  scores?: Score[];
-  
+  scores!: Score[];
 }
 
 export const QuizModel = getModelForClass(Quiz, {
