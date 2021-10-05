@@ -3,6 +3,7 @@ import { buildSchema } from 'type-graphql';
 
 export default async function initServer(): Promise<void> {
   try {
+    const PORT = process.env.SERVER_PORT || 4000;
     const server = new ApolloServer({
       cors: true,
       schema: await buildSchema({
@@ -11,7 +12,7 @@ export default async function initServer(): Promise<void> {
       }),
     });
 
-    const { url } = await server.listen();
+    const { url } = await server.listen({ port: PORT});
     // eslint-disable-next-line no-console
     console.log(`🚀 Server ready at ${url}`);
   } catch (err) {
