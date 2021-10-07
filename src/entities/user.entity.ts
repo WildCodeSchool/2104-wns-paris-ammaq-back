@@ -1,5 +1,6 @@
 import { ObjectType, Field, ID } from 'type-graphql';
-import { Prop, getModelForClass } from '@typegoose/typegoose';
+import { Prop, getModelForClass, Ref } from '@typegoose/typegoose';
+import { School } from './school.entity';
 
 @ObjectType()
 export class User {
@@ -24,6 +25,11 @@ export class User {
 
   @Prop({ trim: true, required: true })
   password!: string;
+
+  @Field(() => School)
+  @Prop({ ref:School, type: () => String})
+  school!: Ref<School, string >;
+
 
   @Field()
   createdAt!: Date;
