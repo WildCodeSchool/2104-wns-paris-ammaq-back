@@ -22,11 +22,11 @@ export default class UserResolver {
     return user;
   }
 
-  @Mutation(() => User)
-  async createUser(@Arg('input') input: UserInput): Promise<User> {
-    const user = new UserModel(input);
-
-    await user.save();
+  @Query(() => User)
+  async userByMail(@Arg('email') email: string): Promise<User> {
+    const user = await UserModel.findOne({ email }).exec();
+    
+    if (!user) throw new Error('no user found');
 
     return user;
   }
