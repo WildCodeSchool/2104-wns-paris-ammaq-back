@@ -12,6 +12,10 @@ export class User {
 
   @Field()
   @Prop({ trim: true, required: true })
+  role!: string;
+
+  @Field()
+  @Prop({ trim: true, required: true })
   firstname!: string;
 
   @Field()
