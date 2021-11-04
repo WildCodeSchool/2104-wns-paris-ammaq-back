@@ -7,7 +7,13 @@ export type Payload = {
 
 export function generateToken(user: User): string {
   const key = process.env.JWT_KEY || 'secretkey';
-  return jwt.sign({ user: user.email }, key);
+  return jwt.sign({
+    email: user.email,
+    role: user.role,
+    firstname: user.firstname,
+    lastname: user.lastname,
+    avatar: user.avatar,
+  }, key);
 }
 
 export function verifyToken(token: string): Payload {

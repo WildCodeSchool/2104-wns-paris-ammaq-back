@@ -7,6 +7,9 @@ export default class UserInput implements Partial<User> {
   avatar?: string;
 
   @Field(() => String)
+  role!: string;
+
+  @Field(() => String)
   firstname!: string;
 
   @Field()
