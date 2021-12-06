@@ -13,7 +13,7 @@ export default async function initServer(): Promise<void> {
         authChecker,
       }),
       context: ({ req }): Payload => {
-        const token = req.headers.authorization;
+        const token = req?.headers.authorization;
         if (token) {
           try {
             return verifyToken(token);
@@ -23,9 +23,10 @@ export default async function initServer(): Promise<void> {
         }
         return {};
       },
+      subscriptions: { path: '/subscriptions' },
     });
 
-    const { url } = await server.listen({ port: PORT});
+    const { url } = await server.listen({ port: PORT });
     // eslint-disable-next-line no-console
     console.log(`🚀 Server ready at ${url}`);
   } catch (err) {

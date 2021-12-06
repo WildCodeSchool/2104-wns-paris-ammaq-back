@@ -1,6 +1,7 @@
 import {
-  Resolver, Query, Arg, ID, Mutation,
+  Resolver, Query, Arg, ID, Mutation, PubSub, Subscription, Root,
 } from 'type-graphql';
+import { PubSubEngine } from 'graphql-subscriptions';
 import MessageInput from '../inputs/message.input';
 import { Message, MessageModel } from '../../entities/message.entity';
 
@@ -28,10 +29,12 @@ export default class MessageResolver {
   }
 
   @Mutation(() => Message)
-  async createMessage(@Arg('input') input: MessageInput): Promise<Message> {
+  async createMessage(@Arg('input') input: MessageInput, @PubSub() pubSub:PubSubEngine): Promise<Message> {
     const message = new MessageModel(input);
 
     await message.save();
+
+    await pubSub.publish('NEW_MESSAGE', message.toJSON());
 
     return message;
   }
@@ -55,5 +58,10 @@ export default class MessageResolver {
     if (!message) throw new Error('message not found');
 
     return message;
+  }
+
+  @Subscription({ topics: 'NEW_MESSAGE' })
+  newMessage(@Root() newMessagePayload: Message): Message {
+    return newMessagePayload;
   }
 }

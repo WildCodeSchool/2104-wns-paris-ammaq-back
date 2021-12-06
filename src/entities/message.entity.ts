@@ -17,6 +17,12 @@ export class Message {
   @Field()
   @Prop({ required: true, trim: true })
   userId!: string;
+
+  @Field()
+  createdAt!: Date;
+
+  @Field()
+  updatedAt!: Date;
 }
 
 export const MessageModel = getModelForClass(Message, {
