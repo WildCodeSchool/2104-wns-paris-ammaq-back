@@ -9,6 +9,14 @@ export class Message {
   @Field()
   @Prop({ required: true, trim: true })
   content!: string;
+
+  @Field()
+  @Prop({ required: true, trim: true })
+  channelId!: string;
+
+  @Field()
+  @Prop({ required: true, trim: true })
+  userId!: string;
 }
 
 export const MessageModel = getModelForClass(Message, {

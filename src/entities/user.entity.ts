@@ -31,9 +31,8 @@ export class User {
   password!: string;
 
   @Field(() => School)
-  @Prop({ ref:School, type: () => String})
+  @Prop({ ref: School, type: () => String })
   school!: Ref<School, string >;
-
 
   @Field()
   createdAt!: Date;

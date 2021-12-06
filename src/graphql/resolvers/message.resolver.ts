@@ -12,6 +12,12 @@ export default class MessageResolver {
     return messages;
   }
 
+  @Query(() => [Message])
+  async messagesByChannelId(@Arg('channelId') channelId: string): Promise<Message[]> {
+    const messages = await MessageModel.find({ channelId }).exec();
+    return messages;
+  }
+
   @Query(() => Message)
   async message(@Arg('id', () => ID) id: string): Promise<Message> {
     const message = await MessageModel.findById(id).exec();

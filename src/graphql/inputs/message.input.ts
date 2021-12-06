@@ -5,4 +5,10 @@ import { Message } from '../../entities/message.entity';
 export default class MessageInput implements Partial<Message> {
   @Field(() => String)
   content!: string;
+
+  @Field(() => String)
+  channelId!: string;
+
+  @Field(() => String)
+  userId!: string;
 }
