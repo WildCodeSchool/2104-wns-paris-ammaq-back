@@ -4,6 +4,9 @@ import { Message } from '../../entities/message.entity';
 @InputType()
 export default class MessageInput implements Partial<Message> {
   @Field(() => String)
+  id!: string;
+
+  @Field(() => String)
   content!: string;
 
   @Field(() => String)
