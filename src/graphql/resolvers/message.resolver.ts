@@ -16,6 +16,7 @@ export default class MessageResolver {
   @Query(() => [Message])
   async messagesByChannelId(@Arg('channelId') channelId: string): Promise<Message[]> {
     const messages = await MessageModel.find({ channelId }).exec();
+
     return messages;
   }
 
@@ -33,7 +34,7 @@ export default class MessageResolver {
     const message = new MessageModel(input);
 
     await message.save();
-    console.log(message.toJSON());
+
     await pubSub.publish('NEW_MESSAGE', message.toJSON());
 
     return message;
@@ -57,7 +58,7 @@ export default class MessageResolver {
     const message = await MessageModel.findByIdAndDelete(id);
     if (!message) throw new Error('message not found');
 
-    await pubSub.publish('DELETE_MESSAGE', id);
+    await pubSub.publish('DELETE_MESSAGE', message);
 
     return message;
   }

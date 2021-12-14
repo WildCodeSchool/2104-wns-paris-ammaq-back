@@ -25,7 +25,6 @@ export default class UserResolver {
   @Query(() => User)
   async userByMail(@Arg('email') email: string): Promise<User> {
     const user = await UserModel.findOne({ email }).exec();
-    
     if (!user) throw new Error('no user found');
 
     return user;
