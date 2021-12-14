@@ -33,7 +33,7 @@ export default class MessageResolver {
     const message = new MessageModel(input);
 
     await message.save();
-
+    console.log(message.toJSON());
     await pubSub.publish('NEW_MESSAGE', message.toJSON());
 
     return message;
@@ -53,11 +53,18 @@ export default class MessageResolver {
   }
 
   @Mutation(() => Message)
-  async deleteMessage(@Arg('id', () => ID) id: string): Promise<Message> {
+  async deleteMessage(@Arg('id', () => ID) id: string, @PubSub() pubSub:PubSubEngine): Promise<Message> {
     const message = await MessageModel.findByIdAndDelete(id);
     if (!message) throw new Error('message not found');
 
+    await pubSub.publish('DELETE_MESSAGE', id);
+
     return message;
+  }
+
+  @Subscription({ topics: 'DELETE_MESSAGE' })
+  deletedMessage(@Root() id: string): string {
+    return id;
   }
 
   @Subscription({ topics: 'NEW_MESSAGE' })
