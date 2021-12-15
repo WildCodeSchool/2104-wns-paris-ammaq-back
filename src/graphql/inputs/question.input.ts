@@ -1,9 +1,8 @@
 import { InputType, Field, ID } from 'type-graphql';
-import { Question } from './../../entities/question.entity';
+import { Question } from '../../entities/question.entity';
 
 @InputType()
-export default class QuestionInput implements Partial<Question>{
-
+export default class QuestionInput implements Partial<Question> {
   @Field(() => String)
   question!: string;
 
