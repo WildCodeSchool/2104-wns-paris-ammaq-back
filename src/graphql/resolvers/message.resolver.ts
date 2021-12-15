@@ -3,6 +3,7 @@ import {
 } from 'type-graphql';
 import { PubSubEngine } from 'graphql-subscriptions';
 import MessageInput from '../inputs/message.input';
+import MessageUpdateInput from '../inputs/messageUpdate.input';
 import { Message, MessageModel } from '../../entities/message.entity';
 
 @Resolver(Message)
@@ -45,10 +46,9 @@ export default class MessageResolver {
 
   @Mutation(() => Message)
   async updateMessage(
-    @Arg('id', () => ID) id: string,
-      @Arg('input') input: MessageInput, @PubSub() pubSub: PubSubEngine,
+    @Arg('input') input: MessageUpdateInput, @PubSub() pubSub: PubSubEngine,
   ): Promise<Message> {
-    const message = await MessageModel.findByIdAndUpdate(id, input, {
+    const message = await MessageModel.findByIdAndUpdate(input.id, input, {
       new: true,
     });
     if (!message) throw new Error('message not found');
