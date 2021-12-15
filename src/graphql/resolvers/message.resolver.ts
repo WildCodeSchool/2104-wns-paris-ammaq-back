@@ -52,7 +52,10 @@ export default class MessageResolver {
       new: true,
     });
     if (!message) throw new Error('message not found');
-    await pubSub.publish('UPDATE_MESSAGE', message.id);
+
+    const JSONmessage = message.toJSON();
+    // eslint-disable-next-line no-underscore-dangle
+    await pubSub.publish('UPDATE_MESSAGE', { ...JSONmessage, id: JSONmessage._id });
 
     return message;
   }
@@ -74,8 +77,8 @@ export default class MessageResolver {
   }
 
   @Subscription({ topics: 'UPDATE_MESSAGE' })
-  updatedMessage(@Root() id: string): string {
-    return id;
+  updatedMessage(@Root() updateMessagePayload: Message): Message {
+    return updateMessagePayload;
   }
 
   @Subscription({ topics: 'NEW_MESSAGE' })
