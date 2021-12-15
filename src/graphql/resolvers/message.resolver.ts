@@ -34,8 +34,11 @@ export default class MessageResolver {
     const message = new MessageModel(input);
 
     await message.save();
+    console.log('new message', message);
 
-    await pubSub.publish('NEW_MESSAGE', message.toJSON());
+    const JSONmessage = message.toJSON();
+    // eslint-disable-next-line no-underscore-dangle
+    await pubSub.publish('NEW_MESSAGE', { ...JSONmessage, id: JSONmessage._id });
 
     return message;
   }
@@ -58,7 +61,8 @@ export default class MessageResolver {
     const message = await MessageModel.findByIdAndDelete(id);
     if (!message) throw new Error('message not found');
 
-    await pubSub.publish('DELETE_MESSAGE', message);
+    await pubSub.publish('DELETE_MESSAGE', message.id);
+    console.log(message.id);
 
     return message;
   }
