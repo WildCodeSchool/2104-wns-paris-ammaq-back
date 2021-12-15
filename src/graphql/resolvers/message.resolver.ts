@@ -46,12 +46,13 @@ export default class MessageResolver {
   @Mutation(() => Message)
   async updateMessage(
     @Arg('id', () => ID) id: string,
-      @Arg('input') input: MessageInput,
+      @Arg('input') input: MessageInput, @PubSub() pubSub: PubSubEngine,
   ): Promise<Message> {
     const message = await MessageModel.findByIdAndUpdate(id, input, {
       new: true,
     });
     if (!message) throw new Error('message not found');
+    await pubSub.publish('UPDATE_MESSAGE', message.id);
 
     return message;
   }
@@ -69,6 +70,11 @@ export default class MessageResolver {
 
   @Subscription({ topics: 'DELETE_MESSAGE' })
   deletedMessage(@Root() id: string): string {
+    return id;
+  }
+
+  @Subscription({ topics: 'UPDATE_MESSAGE' })
+  updatedMessage(@Root() id: string): string {
     return id;
   }
 
